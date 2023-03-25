@@ -14,15 +14,9 @@ namespace FhirApp
             _fhirService = fhirService;
         }
 
-        public void CreatePatient(string firstName, string lastName, DateTime birthDate, string phoneNumber)
+        public void CreatePatient(string firstName, string familyName, DateTime birthDate, string phoneNumber)
         {
-            var patient = new Patient
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                BirthDate = birthDate,
-                PhoneNumber = phoneNumber
-            };
+            var patient = new Patient(firstName, familyName, birthDate, phoneNumber);
             _patients.Add(patient);
             // TODO: Send FHIR request to create patient on server
         }
@@ -36,7 +30,7 @@ namespace FhirApp
         public List<Patient> SearchPatients(string searchWord)
         {
             // TODO: Send FHIR search request to server
-            return _patients.Where(p => p.FirstName.Contains(searchWord) || p.LastName.Contains(searchWord)).ToList();
+            return _patients.Where(p => p.FirstName.Contains(searchWord) || p.FamilyName.Contains(searchWord)).ToList();
         }
     }
 }
