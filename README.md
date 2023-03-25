@@ -15,7 +15,7 @@ To use this application, you will need:
   * tenantId (tenant ID of the Azure AD instance)
   * clientId (client ID of the application registered in Azure AD, aka Service Principal)
   * clientSecret (client secret of the application registered in Azure AD)
-  * fhirScope (scope of the FHIR server, e.g. https://<your-fhir-server>.azurehealthcareapis.com/.default)
+  * fhirScope (scope of the FHIR server, e.g. https://&lt;your-fhir-server&gt;.azurehealthcareapis.com/.default)
 
 ## Usage
 
@@ -34,6 +34,10 @@ To create a new patient, select option 1 and follow the prompts to enter the pat
 To list all patients, select option 2. The application will retrieve a list of all patients from the FHIR server and display their names, birth dates, and phone numbers.
 
 To search for patients, select option 3 and enter a search term. The application will create a FHIR search query using the search term and display the results.
+
+## Next steps
+
+We will be adding more features to this application in the future, to have a more extensive test of Firely SDK. If you have any suggestions, please feel free to open an issue.
 
 ## License
 
