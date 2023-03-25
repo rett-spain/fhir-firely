@@ -17,6 +17,12 @@ To use this application, you will need:
   * clientSecret (client secret of the application registered in Azure AD)
   * fhirScope (scope of the FHIR server, e.g. https://&lt;your-fhir-server&gt;.azurehealthcareapis.com/.default)
 
+## Configuration
+
+Update the `appsettings.json` file with the following information:
+* FhirUrl: The URL of the FHIR server
+* KeyVaultName: The name of the Keyvault that stores the FHIR server's credentials
+
 ## Usage
 
 When you run the application, you will be presented with a main menu that prompts you to select an option:
