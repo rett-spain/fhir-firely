@@ -2,6 +2,7 @@
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Identity.Client;
 using System.Net.Http.Headers;
+using Microsoft.Extensions.Configuration;
 using Hl7.Fhir.Rest;
 
 namespace FhirApp
@@ -10,10 +11,16 @@ namespace FhirApp
     {
         private readonly FhirClient _fhirClient;
 
-        public FhirService(string fhirServerUrl)
+        public FhirService()
         {
+            // Get the FHIR server URL and KeyVault name from the configuration file
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+            var FhirUrl = configuration["FhirUrl"];
+            var keyVaultName = configuration["KeyVaultName"];
+
             // Get the secret from KeyVault
-            var keyVaultName = "health-data-keyvault";
             var kvUri = $"https://{keyVaultName}.vault.azure.net";
             var kvClient = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
 
@@ -52,7 +59,7 @@ namespace FhirApp
                 Timeout = 10000,
                 VerifyFhirVersion = true,
             };
-            _fhirClient = new FhirClient(fhirServerUrl, settings, authHandler);
+            _fhirClient = new FhirClient(FhirUrl, settings, authHandler);
         }
 
         public T Execute<T>(Func<FhirClient, T> fhirFunction)
@@ -70,5 +77,17 @@ namespace FhirApp
                 throw new Exception($"Failed to communicate with FHIR server: {ex.Message}");
             }
         }
+    }
+}
+
+
+public class AuthorizationMessageHandler : HttpClientHandler
+{
+    public System.Net.Http.Headers.AuthenticationHeaderValue? Authorization { get; set; }
+    protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        if (Authorization != null)
+            request.Headers.Authorization = Authorization;
+        return await base.SendAsync(request, cancellationToken);
     }
 }
