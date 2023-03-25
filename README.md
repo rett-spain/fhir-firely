@@ -1,19 +1,21 @@
 # FHIR Console Application to test Firely .NET SDK
 
-This is a simple .NET console application that allows users to interact with a FHIR server using the [Firely .NET SDK](https://docs.fire.ly)
+This is a simple .NET console application that allows users to interact with a FHIR server using the [Firely .NET SDK](https://docs.fire.ly).
+
+We've only tested the application with the [Azure API for FHIR](https://azure.microsoft.com/en-us/services/azure-api-for-fhir/), but it should work with any FHIR server that supports OAuth2 authentication.
 
 ## Requirements
 
 To use this application, you will need:
 
 * .NET Core 3.1 or later
-* A FHIR server to connect to
+* A FHIR server to connect to. This application has been tested with the [Azure API for FHIR](https://azure.microsoft.com/en-us/services/azure-api-for-fhir/), but it should work with any FHIR server that supports OAuth2 authentication.
 * A Keyvault to store the FHIR server's credentials
-  * azureAdInstance
-  * tenantId
-  * clientId
-  * clientSecret
-  * fhirScope
+  * azureAdInstance (e.g. https://login.microsoftonline.com/)
+  * tenantId (tenant ID of the Azure AD instance)
+  * clientId (client ID of the application registered in Azure AD, aka Service Principal)
+  * clientSecret (client secret of the application registered in Azure AD)
+  * fhirScope (scope of the FHIR server, e.g. https://<your-fhir-server>.azurehealthcareapis.com/.default)
 
 ## Usage
 
