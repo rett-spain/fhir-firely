@@ -13,6 +13,20 @@ namespace FhirApp
 
         public FhirService()
         {
+            // Get the secrets from the secrets.json file
+            var secretsConfiguration = new ConfigurationBuilder()
+                .AddJsonFile("secrets.json", optional: false, reloadOnChange: true)
+                .Build();
+            var tenantId = secretsConfiguration["tenantId"];
+            var clientId = secretsConfiguration["clientId"];
+            var credential = new DeviceCodeCredential(
+                new DeviceCodeCredentialOptions
+                {
+                    TenantId = tenantId,
+                    ClientId = clientId
+                }
+            );
+
             // Get the FHIR server URL and KeyVault name from the configuration file
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -22,7 +36,7 @@ namespace FhirApp
 
             // Get the secret from KeyVault
             var kvUri = $"https://{keyVaultName}.vault.azure.net";
-            var kvClient = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+            var kvClient = new SecretClient(new Uri(kvUri), credential);
 
             // Retrieve all the required secrets
             KeyVaultSecret secret = kvClient.GetSecret("azureAdInstance");
