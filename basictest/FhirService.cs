@@ -41,19 +41,15 @@ namespace FhirApp
             // Retrieve all the required secrets
             KeyVaultSecret secret = kvClient.GetSecret("azureAdInstance");
             string AzureAdInstance = secret.Value;
-            secret = kvClient.GetSecret("tenantId");
-            string TenantId = secret.Value;
-            secret = kvClient.GetSecret("clientId");
-            string ClientId = secret.Value;
             secret = kvClient.GetSecret("clientSecret");
             string ClientSecret = secret.Value;
             secret = kvClient.GetSecret("fhirScope");
             string FhirScope = secret.Value;
 
             // Create a ConfidentialClientApplication instance
-            var app = ConfidentialClientApplicationBuilder.Create(ClientId)
+            var app = ConfidentialClientApplicationBuilder.Create(clientId)
                 .WithClientSecret(ClientSecret)
-                .WithAuthority(new Uri($"{AzureAdInstance}{TenantId}"))
+                .WithAuthority(new Uri($"{AzureAdInstance}{tenantId}"))
                 .Build();
 
             // Acquire a token for the specified scopes

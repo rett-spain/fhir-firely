@@ -12,12 +12,14 @@ To use this application, you will need:
 * A FHIR server to connect to. This application has been tested with the [Azure API for FHIR](https://azure.microsoft.com/en-us/services/azure-api-for-fhir/), but it should work with any FHIR server that supports OAuth2 authentication.
 * A Keyvault to store the FHIR server's credentials
   * azureAdInstance (e.g. https://login.microsoftonline.com/)
-  * tenantId (tenant ID of the Azure AD instance)
-  * clientId (client ID of the application registered in Azure AD, aka Service Principal)
   * clientSecret (client secret of the application registered in Azure AD)
   * fhirScope (scope of the FHIR server, e.g. https://&lt;your-fhir-server&gt;.azurehealthcareapis.com/.default)
 
 ## Configuration
+
+You also need a `secrets.json` file with the followin parameters. This file is not included in the repository for security reasons. You can create it by copying the `secrets.json.example` file and filling in the following information:
+* tenantId (tenant ID of the Azure AD instance)
+* clientId (client ID of the application registered in Azure AD, aka Service Principal)
 
 Update the `appsettings.json` file with the following information:
 * FhirUrl: The URL of the FHIR server
