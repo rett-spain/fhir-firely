@@ -14,6 +14,11 @@ To use this application, you will need:
   * azureAdInstance (e.g. https://login.microsoftonline.com/)
   * clientSecret (client secret of the application registered in Azure AD)
   * fhirScope (scope of the FHIR server, e.g. https://&lt;your-fhir-server&gt;.azurehealthcareapis.com/.default)
+* Service Principal (application) registered in Azure AD
+  * The application needs to have the following permissions:
+    * Key Vault (Key Vault)
+    * Azure API for FHIR (FHIR Server)
+    * Azure API for FHIR (FHIR Server - User Impersonation)
 
 ## Configuration
 
